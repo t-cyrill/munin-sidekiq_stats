@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#
+#  sidekiq_stats - A munin plugin for Linux to monitor sidekiq stats
+#
+#  Licensed under the MIT license:
+#
+
+export RAILS_ENV=production
+export RBENV_ROOT="/usr/local/rbenv"
+export PATH="${RBENV_ROOT}/bin:${RBENV_ROOT}/shims:${PATH}"
+eval "$(rbenv init -)"
+
+cd $RAILS_ROOT
+
+RUBY_SCRIPT=$(cat << '_EOT_'
+stats = Sidekiq::Stats.new
+puts "total_processed.value #{stats.processed}"
+puts "total_failed.value #{stats.failed}"
+puts "current_enqueued.value #{stats.enqueued}"
+_EOT_
+)
+
+case $1 in
+  autoconf)
+    echo "yes"
+    exit 0;;
+  config)
+    echo "graph_title ${APP_NAME} Sidekiq - Stats"
+cat << '_EOT_'
+graph_args -l 0
+graph_vlabel count
+graph_category Sidekiq
+total_processed.label Processed
+total_processed.type COUNTER
+total_failed.label Failed
+total_failed.type COUNTER
+current_enqueued.label Enqueued
+current_enqueued.type GAUGE
+_EOT_
+    exit 0;;
+  *)
+    bundle exec rails runner "${RUBY_SCRIPT}";
+    exit 0;;
+esac
