@@ -1,5 +1,7 @@
 # munin-sidekiq_stats
 
+![munin-sidekiq_stats example](https://raw.githubusercontent.com/t-cyrill/munin-sidekiq_stats/master/images/example.png "munin-sidekiq_stats example")
+
 A munin plugin for Linux to monitor sidekiq (Ruby job worker) stats
 
 Usage
