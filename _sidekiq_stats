@@ -29,7 +29,7 @@ case $1 in
     echo "graph_title ${APP_NAME} Sidekiq - Stats"
 cat << '_EOT_'
 graph_args -l 0
-graph_vlabel count
+graph_vlabel jobs / sec
 graph_category Sidekiq
 total_processed.label Processed
 total_processed.type COUNTER
