@@ -13,6 +13,7 @@ And create symbolic link with application name prefix.
 
 ```
 ln -s /usr/share/munin/plugins/_sidekiq_stats /etc/munin/plugins/example-app_sidekiq_stats
+ln -s /usr/share/munin/plugins/_sidekiq_queue_stats /etc/munin/plugins/example-app_sidekiq_queue_stats
 ```
 
 Create munin configration.
